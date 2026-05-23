@@ -202,17 +202,6 @@ const adminUpdateUser = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  getAllTasks,
-  getUserTasks,
-  adminDeleteTask,
-  getAllUsers,
-  adminCreateTask,
-  adminUpdateTask,
-  adminDeleteUser,
-  adminUpdateUser,
-};
-
 const adminCreateUser = async (req, res, next) => {
   try {
     const { name, email, password, role } = req.body;
