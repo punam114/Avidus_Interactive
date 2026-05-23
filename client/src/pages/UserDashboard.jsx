@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, Plus, CheckCircle, Circle, Trash2, Edit2 } from 'lucide-react';
 
-const API_BASE = 'http://localhost:5000/api/tasks';
+const API_BASE = 'https://avidus-interactive-tds5.onrender.com/api/tasks';
 
 function UserDashboard() {
   const navigate = useNavigate();

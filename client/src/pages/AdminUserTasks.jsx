@@ -19,7 +19,7 @@ function AdminUserTasks() {
           return;
         }
 
-        const response = await fetch(`http://localhost:5000/api/admin/tasks/user/${userId}`, {
+        const response = await fetch(`https://avidus-interactive-tds5.onrender.com/api/admin/tasks/user/${userId}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -58,7 +58,7 @@ function AdminUserTasks() {
     try {
       const task = tasks.find(t => t._id === id);
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/admin/tasks/${id}`, {
+      const response = await fetch(`https://avidus-interactive-tds5.onrender.com/api/admin/tasks/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ function AdminUserTasks() {
   const deleteTask = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/admin/tasks/${id}`, {
+      const response = await fetch(`https://avidus-interactive-tds5.onrender.com/api/admin/tasks/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -101,7 +101,7 @@ function AdminUserTasks() {
     
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/admin/tasks/${userId}`, {
+      const response = await fetch(`https://avidus-interactive-tds5.onrender.com/api/admin/tasks/${userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

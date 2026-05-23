@@ -21,7 +21,7 @@ function AdminDashboard() {
           return;
         }
 
-        const response = await fetch('http://localhost:5000/api/admin/users', {
+        const response = await fetch('https://avidus-interactive-tds5.onrender.com/api/admin/users', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -56,7 +56,7 @@ function AdminDashboard() {
     
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+      const response = await fetch(`https://avidus-interactive-tds5.onrender.com/api/admin/users/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -84,7 +84,7 @@ function AdminDashboard() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/admin/users/${editUserForm.id}`, {
+      const response = await fetch(`https://avidus-interactive-tds5.onrender.com/api/admin/users/${editUserForm.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ function AdminDashboard() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/admin/users', {
+      const response = await fetch('https://avidus-interactive-tds5.onrender.com/api/admin/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
