@@ -1,4 +1,4 @@
-const Task = require('../model/task');
+const Task = require('../model/Task');
 
 /**
  * @desc    Create a new task

@@ -1,5 +1,6 @@
-const Task = require('../model/task');
+const Task = require('../model/Task');
 const User = require('../model/User');
+const bcrypt = require('bcrypt');
 
 /**
  * @desc    Admin - Get all tasks across all users
@@ -147,6 +148,60 @@ const adminUpdateTask = async (req, res, next) => {
   }
 };
 
+const adminDeleteUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      res.status(404);
+      throw new Error('User not found');
+    }
+
+    // Delete all tasks associated with this user
+    await Task.deleteMany({ userId: user._id });
+    
+    // Delete the user
+    await user.deleteOne();
+
+    res.json({
+      success: true,
+      message: 'User and associated tasks deleted successfully',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const adminUpdateUser = async (req, res, next) => {
+  try {
+    const { name, email, role } = req.body;
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      res.status(404);
+      throw new Error('User not found');
+    }
+
+    if (name) user.name = name;
+    if (email) user.email = email;
+    if (role) user.role = role;
+
+    const updatedUser = await user.save();
+
+    res.json({
+      success: true,
+      data: {
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        role: updatedUser.role,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllTasks,
   getUserTasks,
@@ -154,4 +209,57 @@ module.exports = {
   getAllUsers,
   adminCreateTask,
   adminUpdateTask,
+  adminDeleteUser,
+  adminUpdateUser,
+};
+
+const adminCreateUser = async (req, res, next) => {
+  try {
+    const { name, email, password, role } = req.body;
+
+    if (!name || !email || !password) {
+      res.status(400);
+      throw new Error('Please provide name, email, and password');
+    }
+
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      res.status(400);
+      throw new Error('User already exists with this email');
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role: role || 'user',
+    });
+
+    res.status(201).json({
+      success: true,
+      data: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  getAllTasks,
+  getUserTasks,
+  adminDeleteTask,
+  getAllUsers,
+  adminCreateTask,
+  adminUpdateTask,
+  adminDeleteUser,
+  adminUpdateUser,
+  adminCreateUser,
 };
